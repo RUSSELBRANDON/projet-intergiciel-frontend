@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface Book {
+export interface Book {
   id?: string;
   title: string;
   author: string;

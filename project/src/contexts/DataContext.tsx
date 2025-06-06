@@ -52,6 +52,12 @@ interface Loan {
   loanDate: string;
   returnDate: string;
   returned: boolean;
+  status: 'pending' | 'approved' | 'rejected' | 'completed';
+  requesterName: string;
+  bookTitle: string;
+  borrowerName: string;
+  lenderName: string;
+  requestDate: string;
 }
 
 interface DataContextType {
@@ -73,6 +79,8 @@ interface DataContextType {
   deleteBook: (id: string) => Promise<void>;
   borrowBook: (bookId: string, userId: string, returnDate: string) => Promise<void>;
   returnBook: (loanId: string) => Promise<void>;
+  handleLoanRequest: (bookId: string, userId: string) => Promise<void>;
+  handleLoanResponse: (requestId: string, action: 'approve' | 'reject') => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -92,6 +100,55 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [courses, setCourses] = useState<Course[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [loans, setLoans] = useState<Loan[]>([]);
+
+  // Gérer les demandes d'emprunt
+  const handleLoanRequest = useCallback(async (bookId: string, userId: string) => {
+    try {
+      const book = books.find(b => b.id === bookId);
+      if (!book) throw new Error('Book not found');
+      
+      const newLoan: Loan = {
+        id: Date.now().toString(),
+        bookId,
+        userId,
+        loanDate: new Date().toISOString(),
+        returnDate: '',
+        returned: false,
+        status: 'pending',
+        requesterName: '', // À remplir avec le nom de l'utilisateur
+        bookTitle: book.title,
+        borrowerName: '', // À remplir avec le nom de l'emprunteur
+        lenderName: '', // À remplir avec le nom du propriétaire
+        requestDate: new Date().toISOString()
+      };
+      
+      setLoans(prev => [...prev, newLoan]);
+    } catch (error) {
+      console.error('Error creating loan request:', error);
+      throw error;
+    }
+  }, [books]);
+
+  // Gérer la réponse aux demandes d'emprunt
+  const handleLoanResponse = useCallback(async (requestId: string, action: 'approve' | 'reject') => {
+    try {
+      setLoans(prev => {
+        return prev.map(loan => {
+          if (loan.id === requestId) {
+            return {
+              ...loan,
+              status: action === 'approve' ? 'approved' : 'rejected',
+              returnDate: action === 'approve' ? new Date().toISOString() : loan.returnDate
+            };
+          }
+          return loan;
+        });
+      });
+    } catch (error) {
+      console.error('Error handling loan request:', error);
+      throw error;
+    }
+  }, []);
   
   useEffect(() => {
     const savedTeachers = localStorage.getItem('teachers');

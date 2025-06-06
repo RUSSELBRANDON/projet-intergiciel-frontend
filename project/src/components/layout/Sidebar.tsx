@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Book, BookOpen } from 'lucide-react';
 
 interface SidebarProps {
-  activeView: 'all' | 'my-books';
-  onViewChange: (view: 'all' | 'my-books') => void;
+  activeView: 'all' | 'my-books' | 'borrowed' | 'loaned' | 'requests';
+  onViewChange: (view: 'all' | 'my-books' | 'borrowed' | 'loaned' | 'requests') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
             } transition-colors duration-200`}
           >
             <BookOpen className="h-5 w-5 mr-3" />
-            <span className="font-medium">Livres</span>
+            <span className="font-medium">Tous les livres</span>
           </button>
           
           <button
@@ -39,7 +39,43 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
             } transition-colors duration-200`}
           >
             <Book className="h-5 w-5 mr-3" />
-            <span className="font-medium">Mes Livres</span>
+            <span className="font-medium">Mes livres</span>
+          </button>
+
+          <button
+            onClick={() => onViewChange('borrowed')}
+            className={`flex items-center w-full px-4 py-3 text-left rounded-md ${
+              activeView === 'borrowed'
+                ? 'bg-blue-50 text-blue-800'
+                : 'text-gray-700 hover:bg-gray-100'
+            } transition-colors duration-200`}
+          >
+            <Book className="h-5 w-5 mr-3" />
+            <span className="font-medium">Mes emprunts</span>
+          </button>
+
+          <button
+            onClick={() => onViewChange('loaned')}
+            className={`flex items-center w-full px-4 py-3 text-left rounded-md ${
+              activeView === 'loaned'
+                ? 'bg-blue-50 text-blue-800'
+                : 'text-gray-700 hover:bg-gray-100'
+            } transition-colors duration-200`}
+          >
+            <Book className="h-5 w-5 mr-3" />
+            <span className="font-medium">Mes prêts</span>
+          </button>
+
+          <button
+            onClick={() => onViewChange('requests')}
+            className={`flex items-center w-full px-4 py-3 text-left rounded-md ${
+              activeView === 'requests'
+                ? 'bg-blue-50 text-blue-800'
+                : 'text-gray-700 hover:bg-gray-100'
+            } transition-colors duration-200`}
+          >
+            <Book className="h-5 w-5 mr-3" />
+            <span className="font-medium">Demandes d'emprunt</span>
           </button>
         </nav>
       </div>
