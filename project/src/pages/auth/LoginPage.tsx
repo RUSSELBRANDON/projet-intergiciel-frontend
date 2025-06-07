@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom'; // Restored useNavigate
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
@@ -63,46 +63,10 @@ const LoginPage: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
+          {/* Titre principal et description sous le logo */}
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">{getTitle()}</h2>
           <p className="mt-2 text-sm text-gray-600">{getDescription()}</p>
           
-          {/* Exemples d'utilisateurs pour les tests */}
-          <div className="mt-4 mb-8 text-sm text-gray-600">
-            <p>Exemples d'utilisateurs pour les tests:</p>
-            {type === 'education' ? (
-              <div className="mt-2 space-y-2">
-                <div className="flex items-center gap-2">
-                  <span>Admin:</span>
-                  <span className="text-blue-600">admin.edu@uds.cm</span>
-                  <span>/ admin123</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>Professeur:</span>
-                  <span className="text-blue-600">prof.martin@uds.cm</span>
-                  <span>/ prof123</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>Étudiant:</span>
-                  <span className="text-blue-600">jean.student@uds.cm</span>
-                  <span>/ student123</span>
-                </div>
-              </div>
-            ) : (
-              <div className="mt-2 space-y-2">
-                <div className="flex items-center gap-2">
-                  <span>Admin:</span>
-                  <span className="text-blue-600">admin.lib@uds.cm</span>
-                  <span>/ admin123</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>Bibliothécaire:</span>
-                  <span className="text-blue-600">sophie.lib@uds.cm</span>
-                  <span>/ lib123</span>
-                </div>
-              </div>
-            )}
-          </div>
-        
           <Link to="/" className="inline-block">
             <span className="sr-only">Institut EDUSYS</span>
             <div className="h-16 w-16 mx-auto bg-blue-800 text-white flex items-center justify-center rounded-full">
@@ -121,6 +85,8 @@ const LoginPage: React.FC = () => {
           </Link>
         </motion.div>
         
+        {/* Ces blocs de titre et description dupliqués sont supprimés */}
+        {/*
         <motion.h2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -137,6 +103,7 @@ const LoginPage: React.FC = () => {
         >
           {getDescription()}
         </motion.p>
+        */}
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

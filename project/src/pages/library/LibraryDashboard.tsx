@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useData } from '../../contexts/DataContext';
 import Navbar from '../../components/layout/Navbar';
 import Sidebar from '../../components/layout/Sidebar';
+import BookTable from '../../components/books/BookTable';
 import BookModal from '../../components/books/BookModal';
 
 interface BookFormData {

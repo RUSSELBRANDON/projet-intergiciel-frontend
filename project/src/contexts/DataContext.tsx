@@ -201,7 +201,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const addStudent = async (student: Omit<Student, 'id'>) => {
     try {
       const response = await axios.post('http://localhost:8003/api/student/store', student, { headers: getHeaders() });
-      setStudents([...students, { id: response.data.id.toString(), ...student }]);
+      setStudents([...students, { id: response.data.student.id.toString(), ...student }]);
     } catch (error) {
       console.error('Error adding student:', error);
       throw error;
